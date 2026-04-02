@@ -122,4 +122,3 @@ This repository is **Project 1** of my 2026 DevSecOps portfolio:
 ```
 
 
-

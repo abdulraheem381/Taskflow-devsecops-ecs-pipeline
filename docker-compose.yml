@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: taskflow-auth-service
+    environment:
+      PORT: 4001
+      NODE_ENV: production
+      JWT_SECRET: portfolio-demo-secret-change-me
+      JWT_EXPIRES_IN: 8h
+      DB_PATH: /app/data/auth.db
+      CORS_ORIGIN: http://localhost:3000
+      LOG_LEVEL: info
+    ports:
+      - "4001:4001"
+    volumes:
+      - auth_data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4001/health').then((res)=>process.exit(res.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  tasks-service:
+    build:
+      context: ./tasks-service
+    container_name: taskflow-tasks-service
+    environment:
+      PORT: 4002
+      NODE_ENV: production
+      JWT_SECRET: portfolio-demo-secret-change-me
+      DB_PATH: /app/data/tasks.db
+      CORS_ORIGIN: http://localhost:3000
+      LOG_LEVEL: info
+    ports:
+      - "4002:4002"
+    volumes:
+      - tasks_data:/app/data
+    depends_on:
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4002/health').then((res)=>process.exit(res.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: taskflow-frontend
+    ports:
+      - "3000:8080"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      tasks-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  auth_data:
+  tasks_data:
+

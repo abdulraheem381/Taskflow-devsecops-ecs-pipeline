@@ -122,7 +122,3 @@ This repository is **Project 1** of my 2026 DevSecOps portfolio:
 ```
 
 
-
-We are on track to finish Project 1 in 14 days and start bulk job applications + cold emails/DMs.
-
-Let’s get you hired as a fresher DevOps Engineer! 🔥

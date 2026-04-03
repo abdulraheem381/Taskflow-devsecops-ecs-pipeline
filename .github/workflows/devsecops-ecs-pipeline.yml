@@ -64,8 +64,8 @@ jobs:
         with:
           args: >
             -Dsonar.organization=abdulraheem381
-            -Dsonar.projectKey=abdulraheem381_taskflow
-            -Dsonar.projectName=taskflow
+            -Dsonar.projectKey=abdulraheem381_Taskflow-devsecops-ecs-pipeline
+            -Dsonar.projectName=Taskflow-devsecops-ecs-pipeline
 
   build-and-push:
     name: Build and Push Images

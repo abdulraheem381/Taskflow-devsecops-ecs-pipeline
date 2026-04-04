@@ -37,7 +37,7 @@ export default function DashboardPage() {
   async function fetchTasks() {
     try {
       setError("");
-      const { data } = await tasksApi.get("/");
+      const { data } = await tasksApi.get("");
       setTasks(data.tasks);
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to fetch tasks.");
@@ -47,10 +47,10 @@ export default function DashboardPage() {
   async function handleSubmit(task) {
     try {
       if (editingTask) {
-        const { data } = await tasksApi.put(`/${editingTask.id}`, task);
+        const { data } = await tasksApi.put(`${editingTask.id}`, task);
         setTasks((current) => current.map((item) => (item.id === editingTask.id ? data.task : item)));
       } else {
-        const { data } = await tasksApi.post("/", task);
+        const { data } = await tasksApi.post("", task);
         setTasks((current) => [data.task, ...current]);
       }
 
@@ -63,7 +63,7 @@ export default function DashboardPage() {
 
   async function handleDelete(taskId) {
     try {
-      await tasksApi.delete(`/${taskId}`);
+      await tasksApi.delete(`${taskId}`);
       setTasks((current) => current.filter((task) => task.id !== taskId));
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to delete task.");
@@ -80,7 +80,7 @@ export default function DashboardPage() {
     setTasks((current) => current.map((task) => (task.id === taskId ? nextTask : task)));
 
     try {
-      const { data } = await tasksApi.put(`/${taskId}`, nextTask);
+      const { data } = await tasksApi.put(`${taskId}`, nextTask);
       setTasks((current) => current.map((task) => (task.id === taskId ? data.task : task)));
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to move task.");

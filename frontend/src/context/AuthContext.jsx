@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
   async function login(credentials) {
     setLoading(true);
     try {
-      const { data } = await authApi.post("/login", credentials);
+      const { data } = await authApi.post("login", credentials);
       setAuthState({ token: data.token, user: data.user });
       return data;
     } finally {
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   async function register(payload) {
     setLoading(true);
     try {
-      const { data } = await authApi.post("/register", payload);
+      const { data } = await authApi.post("register", payload);
       setAuthState({ token: data.token, user: data.user });
       return data;
     } finally {

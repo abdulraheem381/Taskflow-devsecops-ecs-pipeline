@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const authBaseURL = import.meta.env.VITE_AUTH_API_URL || "http://localhost:4001/api/auth";
-const tasksBaseURL = import.meta.env.VITE_TASKS_API_URL || "http://localhost:4002/api/tasks";
+const authBaseURL = import.meta.env.VITE_AUTH_API_URL || "/api/auth/";
+const tasksBaseURL = import.meta.env.VITE_TASKS_API_URL || "/api/tasks/";
 
 export const authApi = axios.create({
   baseURL: authBaseURL,
@@ -24,4 +24,3 @@ export function setTasksToken(token) {
     delete tasksApi.defaults.headers.common.Authorization;
   }
 }
-

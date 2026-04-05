@@ -469,4 +469,5 @@ It is suitable as a hands-on DevSecOps portfolio project because it shows the fu
 
 ## License
 
-No explicit license file is currently included in the repository. Add one if you want to publish reuse terms clearly.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
